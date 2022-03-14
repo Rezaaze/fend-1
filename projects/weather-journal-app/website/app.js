@@ -23,7 +23,8 @@ button.addEventListener("click", (e)=>{
 
     data.date =newDate;
     data.user_response = feelings.value;
-    // first api request for getting the location from zipcode pls only use german zipcodes like 60437 for frankfurt 
+    // first api request for getting the location from zipcode pls only use german zipcodes like 60437 for frankfurt
+    
     api_for_location(api_key,zip.value)
     .then(res=>{
         api_request_for_weather(api_key,res)
@@ -34,7 +35,10 @@ button.addEventListener("click", (e)=>{
             .then(res=>update_content(res))
             .catch(err=>("error in click event:", err))
         })
+        .catch(err=>console.log("Error! :",err))
     })
+    .catch(err=>console.log("Error! :" ,err))
+       
     //clearing the form inputs for new request
     zip.value = null;
     
@@ -78,16 +82,26 @@ function getData(){
     .catch(err=>console.log("Error in getData", err))
 }
 //api request for weather
-function api_request_for_weather (api_key,city){
-    return fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${api_key}&units=metric`)
-        .then(res=>res.json())
-        .catch(err=>console.log("error in request weather:",err))
+async function api_request_for_weather (api_key,city){
+    try{
+        let respond = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${api_key}&units=metric`)
+        if(respond.ok){
+        respond = await respond.json()
+        return respond
+        }
+        else{
+            console.log("Error!",respond.status)
+        }
+    }
+    catch(err){
+        console.log("error in request weather:",err)
+    }
 }
 //api request for location
 function api_for_location (api_key,zip){
     return fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip},DE&appid=${api_key}`)
             .then(res=>res.json())
-            .catch(err=>console.log("error in api_loc:", err))
+            .catch((err)=>console.log("error in api_loc:", err))
 
 }
 // function for updateing UI with data from server
