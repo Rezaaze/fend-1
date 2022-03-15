@@ -16,6 +16,14 @@ body{
     font-family: 'Oswald', sans-serif;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    
+    
+}
+
 .holder{
 
 }
@@ -65,6 +73,7 @@ input{
 }
 
 button{
+    display: block;
     width: 400px;
     height: 100px;
     background: #3b4a6b;
@@ -109,3 +118,8 @@ button:focus {
     font-family: 'Oswald', sans-serif;
 
 } 
+
+.grid{
+    display: grid;
+    grid-template-areas: "";
+}

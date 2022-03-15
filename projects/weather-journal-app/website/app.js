@@ -1,7 +1,7 @@
 /* Global Variables */
 const api_key = "b076b3276229daa59919e693823fcecb";
 const api  = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=";
-const api_loc = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${api_key}`
+const api_loc = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip},us&appid=${api_key}`
 // created an empty object for holding variables for the backend
 const data = {}
 // Create a new date instance dynamically with JS
@@ -11,8 +11,9 @@ const newDate = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 // created 2 variables and saved the button element and the content in them
 const button = document.getElementById('generate');
-
-const content =document.getElementById('date');
+const date = document.getElementById('date');
+const content =document.getElementById('content');
+const temp = document.getElementById('temp');
 
 
 // added eventlistener to the button 
@@ -20,6 +21,10 @@ button.addEventListener("click", (e)=>{
     // saved the value from the textarea and input from zipcode in variables
     const feelings = document.getElementById('feelings');
     const zip = document.getElementById('zip');
+    if(!validateZipCode(zip.value)){
+        alert("Please Use real 5 digit zipcodes from us only ")
+    }
+
     
 
     data.date =newDate;
@@ -110,21 +115,18 @@ function api_for_location (api_key,zip){
 // function for updateing UI with data from server
 function update_content(data){
     
-    content.innerText="";
-    const ente =  data.entrys.map((item) =>{
-            const LI = document.createElement('LI');
-            LI.innerText = `Date : ${item.date} // Comment : ${item.user_response} // Temperatur : ${item.temperature} Celsius`;
-            return LI  
-
-    })
-
+    data = data.entrys.pop();
     
-    for(let i = ente.length-1; i>=0 ;i--){
-        
-        content.appendChild(ente[i]);
-        
-        
-    }
+    content.innerHTML = 'Felling : '+ data.user_response;
+    temp.innerHTML = 'Temperature : '+ data.temperature + " Celsius";
+    date.innerHTML = 'Date : ' + data.date;
+    
+
+}
+
+function validateZipCode(elementValue){
+    let zipCodePattern = /^\d{5}$|^\d{5}-\d{4}$/;
+     return zipCodePattern.test(elementValue);
 }
 // updating UI everytime site is refreshed
 getData()

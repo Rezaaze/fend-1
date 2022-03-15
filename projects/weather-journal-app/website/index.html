@@ -8,13 +8,14 @@
 </head>
  <body>
 <div id = "app">
+  <div class="grid">
   <div class ="holder headline">
     Weather Journal App
   </div>
   <form action="/post" method="POST" >
   <div class ="holder zip">
-    <label for="zip">Enter Zipcode here this format (ZIPCODE,COUNTRYCODE)</label>
-    <input type="text" id="zip" placeholder="enter zip code here example : 90210,us" required>
+    <label for="zip">Enter Zipcode here this format (ZIPCODE only US )</label>
+    <input type="text" id="zip" placeholder="enter zip code here example : 90210" required>
   </div>
   <div class ="holder feel">
     <label for="feelings">How are you feeling today?</label>
@@ -25,12 +26,13 @@
   <div class ="holder entry">
     <div class = "title">Most Recent Entry</div>
    <div id = "entryHolder">
-    <div id = "date"></div> 
+   <div id = "date"></div> 
    <div id = "temp"></div>
    <div id = "content"></div>
   </div>
   </div>
   </div>
+</div>
 <script src="app.js" type="text/javascript"></script>
 
 </body>
