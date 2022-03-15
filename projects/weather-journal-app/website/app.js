@@ -17,10 +17,10 @@ const content =document.getElementById('date');
 
 // added eventlistener to the button 
 button.addEventListener("click", (e)=>{
-    
     // saved the value from the textarea and input from zipcode in variables
     const feelings = document.getElementById('feelings');
     const zip = document.getElementById('zip');
+    
 
     data.date =newDate;
     data.user_response = feelings.value;
@@ -105,7 +105,7 @@ function api_for_location (api_key,zip){
     return fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${api_key}`)
             .then(res=>res.json())
             .catch((err)=>console.log("error in api_loc:", err))
-
+    
 }
 // function for updateing UI with data from server
 function update_content(data){
