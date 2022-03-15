@@ -1,29 +1,30 @@
 /* Global Variables */
 const api_key = "b076b3276229daa59919e693823fcecb";
 const api  = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=";
-const api_loc = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip},DE&appid=${api_key}`
+const api_loc = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${api_key}`
 // created an empty object for holding variables for the backend
 const data = {}
 // Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+const d = new Date();
+const newDate = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
+
 
 // created 2 variables and saved the button element and the content in them
 const button = document.getElementById('generate');
 
 const content =document.getElementById('date');
-console.log(content)
+
 
 // added eventlistener to the button 
 button.addEventListener("click", (e)=>{
-    e.preventDefault();
+    
     // saved the value from the textarea and input from zipcode in variables
     const feelings = document.getElementById('feelings');
     const zip = document.getElementById('zip');
 
     data.date =newDate;
     data.user_response = feelings.value;
-    // first api request for getting the location from zipcode pls only use german zipcodes like 60437 for frankfurt
+    // first api request for getting the location from zipcode 
     
     api_for_location(api_key,zip.value)
     .then(res=>{
@@ -40,9 +41,11 @@ button.addEventListener("click", (e)=>{
     .catch(err=>console.log("Error! :" ,err))
        
     //clearing the form inputs for new request
+
     zip.value = null;
     
-    feelings.value = null; 
+    feelings.value = null;
+    
     
     
     
@@ -99,7 +102,7 @@ async function api_request_for_weather (api_key,city){
 }
 //api request for location
 function api_for_location (api_key,zip){
-    return fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip},DE&appid=${api_key}`)
+    return fetch(`http://api.openweathermap.org/geo/1.0/zip?zip=${zip}&appid=${api_key}`)
             .then(res=>res.json())
             .catch((err)=>console.log("error in api_loc:", err))
 
